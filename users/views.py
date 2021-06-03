@@ -1,22 +1,19 @@
 from django.shortcuts import render
 from .forms import RegisterForm
-# Create your views here.
-
-
 
 
 def register(request):
-    if request.mathod == 'POST':
-    # 사용자의 요청이 POST 요청이면 폼데이터를 처리하는 if 문
+    if request.method == 'POST':
+        # 사용자의 요청이 POST 요청이면 폼데이터를 처리하는 if 문
 
-        user_form = RegisterForm(request.POST)\
+        user_form = RegisterForm(request.POST)
         # 폼 인스턴스를 생성하고 요청에 의한 데이터로 해당 필드의 속성 값을 채운다 (binding)
 
         if user_form.is_valid():
-        # 폼이 유효한지 체크 한다.
-        # is_valid() 같은 경우 해당 폼의 clean()을 호출해서 유효성 검사를 하는 것 이다.
-        # is_valid()는 그안에서 어떠한 동작이 일어나던지 True 아니면 False가 나오는 메소드 이다.
-        # 즉 True 이면 유효성 검사 통과 해서 밑에 코드가 실행 되고 아니면 에러를 발생 한다.
+            # 폼이 유효한지 체크 한다.
+            # is_valid() 같은 경우 해당 폼의 clean()을 호출해서 유효성 검사를 하는 것 이다.
+            # is_valid()는 그안에서 어떠한 동작이 일어나던지 True 아니면 False가 나오는 메소드 이다.
+            # 즉 True 이면 유효성 검사 통과 해서 밑에 코드가 실행 되고 아니면 에러를 발생 한다.
 
             user = user_form.save(commit=False)
             # 유효성 검사를 체크한 후 해당 Form 과 해당 데이터가 True이면 user 변수해 저장한다.

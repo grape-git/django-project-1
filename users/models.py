@@ -9,6 +9,7 @@ GENDER_CHOICES = (
     (2, 'Not to disclose')
 )
 
+
 class UserManager(BaseUserManager):
     def _create_user(self, email, username, password, gender=2, **extra_fields):
         """
@@ -41,18 +42,17 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, 'blogs/like_section.html',  password, **extra_fields)
+        return self._create_user(email, '', password, **extra_fields)
 
 
 class User(AbstractUser):
     email = models.EmailField(verbose_name='email', max_length=255, unique=True)
-
     username = models.CharField(max_length=30)
     gender = models.SmallIntegerField(choices=GENDER_CHOICES)
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [] # # 필수로 받고 싶은 필드를 넣기
+    REQUIRED_FIELDS = []  # # 필수로 받고 싶은 필드를 넣기
 
-    def __str__(self): # 매직 메소드
+    def __str__(self):  # 매직 메소드
         return "<%d %s>" % (self.pk, self.email)

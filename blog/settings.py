@@ -52,7 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+INSTALLED_APPS += [
     'users',
+    'blogsapp',
+    'helpers',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AUTH_USER_MODEL = "users.User"
+
 
 
 # Internationalization
@@ -137,14 +142,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL 은 static 파일에 접근하기 위해 URL 을 작성하는 것이다.
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# STATICFILES_DIRS 같은 경우 list 나 tuple 로 값을 가지는 설정으로 STATICFILES 의 위치를 값으로
+# 입력하는 것이다.
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 각 media 파일에 관한 URL prefix
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 업로드된 파일을 저장할 디렉토리 경로
+MEDIA_URL = '/media/'
+
+
+# User Custom User
+AUTH_USER_MODEL = "users.User"
+
+# 로그인, 로그아웃 변수 설정
+# LOGIN_URL = '/accounts/login/' 기본값
+# LOGOUT_URL = '/accounts/logout/' 기본값
+
+LOGIN_REDIRECT_URL = '/'  # 반드시 정의할 것
+LOGOUT_REDIRECT_URL = '/'  # 반드시 정의할 것
