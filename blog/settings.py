@@ -58,6 +58,7 @@ INSTALLED_APPS += [
     'users',
     'blogsapp',
     'helpers',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [

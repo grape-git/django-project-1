@@ -1,5 +1,5 @@
 {% extends 'blogsapp/_base.html' %}
-
+{% load social_share %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -9,6 +9,72 @@
             <img src="{{ post.image.url }}">
             {% endif %}
             <p>{{ post.content }}</p>
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- 소셜 공유 -->
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <button type="button" class="btn btn-info float-right">
+            {% post_to_facebook post.get_absolute_url "facebook" %}
+        </button>
+    </div>
+</div>
+
+
+<!-- 좋아요 버튼 -->
+<div id="like_section">
+    {% include 'blogsapp/like_section.html' %}
+</div>
+
+
+<!-- 댓글 목록 -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 comment-bg">
+            <div class="page-header">
+                <h1>Comments</h1>
+            </div>
+            <div class="comments-list">
+                {% for comment in comments %}
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading user_name">
+                            {{ comment.user }}
+                        </h4>
+                        {{ comment.content }}
+                        <hr>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 댓글 등록하기 -->
+            <div class="row">
+                {% if errors %}
+                <ul>
+                    {% for error in errors %}
+                    <li>
+                        <div class="alert alert-primary">{{ error }}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <h3>댓글 쓰기</h3>
+                <form method="post" action="{% url 'comment_write' %}" enctype="multipart/form-data"
+                      class="col-lg-8 col-md-10 mx-auto">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <div class="form-group row">
+                        <textarea class="form-control" name="content" rows="7"></textarea>
+                    </div>
+                    <div class="form-group row float-right">
+                        <button type="submit" class="btn btn-primary">저장하기</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
